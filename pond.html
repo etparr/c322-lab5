@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=devide-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .card {
+                box-shadow: 0 4px 8pc 0 rgba(0, 0, 0, 0.2);
+                transition: 0.3s;
+                width: 20%;
+                border-radius: 5px;
+            }
+
+            .card:hover {
+                box-shadow: 0 4px 8pc 0 rgba(0, 0, 0, 0.2);
+            }
+
+            img {
+                border-radius: 5px 5px 0 0;
+            }
+
+            .container {
+                padding: 2px 16px;
+            }
+        </style>
+    </head>
+<html>
+<body>
+    <div class ="card">
+        <img src="http://localhost:8080/ducks/1/image" alt ="Avatar" style="width:100%" >
+        <div class="container">
+            <h4><b>1</b></h4>
+            <p>Mallord</p>
+        </div>
+    </div>
+    <div id="container"></div>
+        <script>
+async function displayImage() {
+    let host = "http://localhost:8080";
+    let response = await fetch(host + "/ducks", 
+    { method: "GET" });
+    console.log(response);
+    if (response.status = 200) {
+        let ducks = await response.json();
+        const container = document.getElementById('container');
+        container.innerHTML = '';
+        ducks.forEach(duck => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <img src="${host}/ducks/${duck.id}/image" alt="Duck" style="width:100%">
+                <div class="container">
+                    <h4><b>${duck.id}</b></h4>
+                    <p>${duck.type}</p>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+}
+displayImage();
+       </script>
+</body>
+
+</html>
